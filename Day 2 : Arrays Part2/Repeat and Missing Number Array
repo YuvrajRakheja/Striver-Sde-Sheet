@@ -1,0 +1,41 @@
+public class Solution {
+    // DO NOT MODIFY THE ARGUMENTS WITH "final" PREFIX. IT IS READ ONLY
+    public int[] repeatedNumber(final int[] A) {
+        int xr=0;
+        
+        for(int i=0;i<A.length;i++){
+            xr^=A[i];
+            xr^=i+1;
+        }
+        //now xr has both missing and repeated number
+        int setbit=0;
+        while(true){
+            if((xr&(1<<setbit))!=0)   break;
+            setbit++;
+        }//found setbit
+        int one_club=0;
+        int zero_club=0;
+        
+        for(int i=0;i<A.length;i++){
+            if((A[i]&(1<<setbit))==0){
+                zero_club^=A[i];
+            }else{
+                one_club^=A[i];
+            }
+        }
+         for(int i=1;i<=A.length;i++){
+            if((i&(1<<setbit))==0){
+                zero_club^=i;
+            }else{
+                one_club^=i;
+            }
+        }
+        int cnt=0;
+        for(int vl:A){
+            if(vl==zero_club)    cnt++;
+        }
+        if(cnt==2)  return new int[]{zero_club,one_club};
+        else    return new int[]{one_club,zero_club};
+    }
+    
+}
