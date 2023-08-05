@@ -1,0 +1,21 @@
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        Map<Integer,Integer> map=new HashMap<Integer,Integer>();
+        int[] res=new int[2];
+        
+        for(int i=0;i<nums.length;i++){
+            int remaining=target-nums[i];
+            if(map.containsKey(remaining)){
+                res[0]=map.get(remaining);//As it is already present so place at 0 index
+                res[1]=i;
+                return res;
+            }else{
+                map.put(nums[i],i);
+            }
+        }
+        return res;
+    }
+}
+//OPTIMIZED APPROACH
+//TC -O(N)
+//SC-O(N)
