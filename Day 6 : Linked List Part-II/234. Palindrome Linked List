@@ -1,0 +1,61 @@
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+        if(head==null||head.next==null){//mandatory check for linked list questions 0,1,2,even,odd.ALWAYS REMEMBER
+            return true;
+        }
+        ListNode mid=middleofll(head);//find mid
+        ListNode nhead=mid.next;//next to mid
+        mid.next=null;//to separate first list
+
+        nhead=reverseofLL(nhead);//reversing 2 nd part of list
+
+        ListNode c1=head;
+        ListNode c2=nhead;
+
+        boolean ans=true;
+        while(c2!=null){ //no need to check c1 as for even both equally point null whereas in odd c1 has 1 more node so c2 pounts null early
+            if(c1.val!=c2.val){
+                ans=false;
+                break;
+            }
+            c1=c1.next;
+            c2=c2.next;
+        }
+        nhead=reverseofLL(nhead);
+        mid.next=nhead;
+        //above 2 lines done so that linked list is in original condition and not distorted even though we have got our answer
+
+        return ans;
+    }
+    public ListNode middleofll(ListNode head){
+        if(head==null||head.next==null){//mandatory check for linked list questions 0,1,2,even,odd.ALWAYS REMEMBER
+            return head;
+        }
+        ListNode slow=head;
+        ListNode fast=head;
+
+        while(fast.next!=null && fast.next.next!=null){
+            slow=slow.next;
+            fast=fast.next.next;
+        }
+        return slow;
+    }
+    public ListNode reverseofLL(ListNode head){
+    //    if(head==null && head.next==null){//mandatory check for linked list questions 0,1,2,even,odd.ALWAYS REMEMBER
+    //         return head;
+    //     }
+        ListNode prev=null;
+        ListNode curr=head;
+        ListNode frwd=null;
+
+        while(curr!=null){
+            frwd=curr.next;//backup.We could have written ListNode frwd but we declared it once now changing values
+
+            curr.next=prev;//link
+
+            prev=curr;//update
+            curr=frwd;
+        }
+        return prev;
+    }
+}
